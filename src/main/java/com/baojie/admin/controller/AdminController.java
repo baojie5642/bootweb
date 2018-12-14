@@ -96,13 +96,23 @@ public class AdminController {
     }
 
     /**
-     * 用户管理页
+     * 个人信息页
      *
      * @return
      */
     @GetMapping(value = {"/user"})
     public String users() {
         return "admin/page/user";
+    }
+
+    /**
+     * 用户管理页
+     *
+     * @return
+     */
+    @GetMapping(value = {"/account"})
+    public String account() {
+        return "admin/page/account";
     }
 
     /**
@@ -114,6 +124,7 @@ public class AdminController {
     public String setting() {
         return "admin/page/setting";
     }
+
 
     /**
      * 获取已登录用户名

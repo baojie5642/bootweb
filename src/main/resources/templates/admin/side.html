@@ -19,14 +19,17 @@
             text-color="#fff">
         <div class="logo">
             <span class="fa fa-code fa-fw"></span>
-            <span v-if="!config.isCollapse" style="animation-duration: 0s;-webkit-animation-duration:0s">Tumo Blog</span>
+            <span v-if="!config.isCollapse" style="animation-duration: 0s;-webkit-animation-duration:0s">Baojie
+                Blog</span>
         </div>
+
         <a href="/admin">
             <el-menu-item index="1">
                 <i class="fa fa-home fa-fw"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
         </a>
+
         <a href="/admin/article/publish">
             <el-menu-item index="2">
                 <i class="fa fa-pencil-square-o fa-fw"></i>
@@ -69,6 +72,14 @@
                 <span slot="title">个人信息</span>
             </el-menu-item>
         </a>
+        <!---->
+        <a href="/admin/account">
+            <el-menu-item index="11">
+                <i class="fa fa-dashboard fa-fw"></i>
+                <span slot="title">用户管理</span>
+            </el-menu-item>
+        </a>
+
         <a href="/admin/setting">
             <el-menu-item index="10">
                 <i class="fa fa-cog fa-fw"></i>

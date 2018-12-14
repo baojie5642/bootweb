@@ -33,12 +33,6 @@ public class SiteController {
     private ArticleService articleService;
 
     @Autowired
-    private ArticleTagsService articleTagsService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
     private CommentsService commentsService;
 
     @Autowired
@@ -52,11 +46,9 @@ public class SiteController {
      */
     @GetMapping(value = {"", "/", "/index"})
     public String index(Model model) {
-
         //初始化页面数据
         initIndex(1, model);
         initFooter(model);
-
         return "site/index";
     }
 
@@ -67,7 +59,6 @@ public class SiteController {
      */
     @GetMapping("/about")
     public String about(Model model, @RequestParam(value = "cp", required = false) Integer cp) {
-
         if (cp == null) {
             //查询的第一页评论数据
             cp = 1;
