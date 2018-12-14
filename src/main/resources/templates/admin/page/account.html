@@ -32,27 +32,134 @@
             <el-main>
                 <el-card>
                     <h2>用户管理</h2>
-                    <div>
-                        <el-row :gutter="40">
-                            <el-col :span="12">
-                                <el-card class="card-category">
-                                    <div slot="header">
-                                        <span>用户检索</span>
-                                    </div>
-                                    <div>
-                                        <el-form label-width="80px" :model="entity.query" ref="user">
-                                            <el-form-item required prop="username" :rules="[{ required: true, message: '请输入用户账号'}]" label="账号">
-                                                <el-input placeholder="请输入用户账号" v-model="entity.query.username"></el-input>
-                                            </el-form-item>
-                                            <el-form-item>
-                                                <el-button type="primary" @click="query" style="float:right;">保存信息
-                                                </el-button>
-                                            </el-form-item>
-                                        </el-form>
-                                    </div>
-                                </el-card>
-                            </el-col>
-                        </el-row>
+                    <!-- 添加框 -->
+                    <el-card class="card-category">
+                        <el-card class="card-tags">
+                            <div slot="header">
+                                <span>添加用户</span>
+                            </div>
+                            <div>
+                                <el-form label-width="100px" :model="entity.add" ref="add">
+                                    <el-form-item required prop="username"
+                                                  :rules="[{ required: true, message: '请输入用户名称'}]"
+                                                  label="用户名称">
+                                        <el-input placeholder="请输入用户名称"
+                                                  v-model="entity.add.username"></el-input>
+                                    </el-form-item>
+                                    <el-form-item required prop="nickname"
+                                                  :rules="[{ required: false, message: '请输入用户昵称'}]"
+                                                  label="用户昵称">
+                                        <el-input placeholder="请输入用户昵称"
+                                                  v-model="entity.add.nickname"></el-input>
+                                    </el-form-item>
+                                    <el-form-item required prop="email"
+                                                  :rules="[{ required: true, message: '请输入用户邮箱'}]" label="用户邮箱">
+                                        <el-input placeholder="请输入用户邮箱" v-model="entity.add.email"></el-input>
+                                    </el-form-item>
+                                    <el-form-item required prop="password"
+                                                  :rules="[{ required: true, message: '请输入密码'}]" label="输入密码">
+                                        <el-input placeholder="请输入密码,密码长度在6位及以上" v-model="entity.add.password"
+                                                  type="password"></el-input>
+                                    </el-form-item>
+                                    <el-form-item required prop="confirm"
+                                                  :rules="[{ required: true, message: '确认密码'}]" label="确认密码">
+                                        <el-input placeholder="确认密码" v-model="entity.add.checkPass"
+                                                  type="password"></el-input>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="danger" @click="addUser" style="float:right;">添加
+                                        </el-button>
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                        </el-card>
+                    </el-card>
+
+                    <!-- 列表 -->
+                    <el-table
+                            ref="users"
+                            :data="entity.users"
+                            border
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="selectChange">
+                        <el-table-column
+                                ref="selection"
+                                align="center"
+                                type="selection"
+                                width="55">
+                        </el-table-column>
+                        <el-table-column
+                                prop="id"
+                                align="center"
+                                sortable
+                                fixed
+                                label="用户ID"
+                                show-overflow-tooltip
+                                width="100">
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="username"
+                                label="用户名称"
+                                width="150"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="nickname"
+                                label="用户昵称"
+                                width="150"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="password"
+                                label="密码"
+                                width="150"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="salt"
+                                label="盐"
+                                width="150"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="email"
+                                label="电子邮箱"
+                                width="150"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column label="操作" align="center" fixed="right">
+                            <template slot-scope="scope">
+                                <el-button
+                                        icon="el-icon-delete"
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(scope.row.id)">删除
+                                </el-button>
+                                <el-button size="mini" icon="el-icon-edit" type="warning"
+                                           @click="handleEdit(scope.row.id)">编辑
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+
+                    <!-- 分页 -->
+                    <div class="pagination">
+                        <el-pagination
+                                background
+                                @size-change="handleSizeChange"
+                                @current-change="handleCurrentChange"
+                                :current-page="pageConf.pageCode"
+                                :page-sizes="pageConf.pageOption"
+                                :page-size="pageConf.pageSize"
+                                layout="total, sizes, prev, pager, next, jumper"
+                                :total="pageConf.totalPage">
+                        </el-pagination>
                     </div>
                 </el-card>
             </el-main>

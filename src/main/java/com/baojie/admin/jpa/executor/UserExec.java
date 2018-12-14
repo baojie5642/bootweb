@@ -110,7 +110,10 @@ public class UserExec {
         if (ids.length <= 0) {
             return;
         }
-        for (long id : ids) {
+        for (Long id : ids) {
+            if (null == id) {
+                continue;
+            }
             try {
                 repo.deleteById(id);
             } catch (Throwable te) {
